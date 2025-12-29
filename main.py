@@ -29,18 +29,48 @@ def run_macro():
     while macro_active:
         try:
             screen_width, screen_height = pyautogui.size()
-            click1_x = (screen_width // 2) + 25
-            click1_y = (screen_height // 2) - 50
-            pyautogui.click(click1_x, click1_y)
-            print(f"Click 1 to the right ({click1_x}, {click1_y})")
             
+            base_y = (screen_height // 2) - 50
+            
+            # Первая позиция: центр +25px вправо, 3 клика по высоте
+            click1_x = (screen_width // 2) + 25
+            click1_y_top = base_y - 25      # Выше на 25px
+            click1_y_middle = base_y        # Средний
+            click1_y_bottom = base_y + 25   # Ниже на 25px
+            
+            time.sleep(0.3)
+            pyautogui.click(click1_x, click1_y_top)
+            print(f"Click 1 RIGHT TOP ({click1_x}, {click1_y_top})")
+            
+            time.sleep(0.3)
+            pyautogui.click(click1_x, click1_y_middle)
+            print(f"Click 1 RIGHT MIDDLE ({click1_x}, {click1_y_middle})")
+            
+            time.sleep(0.3)
+            pyautogui.click(click1_x, click1_y_bottom)
+            print(f"Click 1 RIGHT BOTTOM ({click1_x}, {click1_y_bottom})")
+            
+            # Вторая позиция: центр -25px влево, 3 клика по высоте
             click2_x = (screen_width // 2) - 25
-            click2_y = (screen_height // 2) - 50
-            pyautogui.click(click2_x, click2_y)
-            print(f"Click 2 to the left ({click2_x}, {click2_y})")
+            click2_y_top = base_y - 25      # Выше на 25px
+            click2_y_middle = base_y        # Средний
+            click2_y_bottom = base_y + 25   # Ниже на 25px
+            
+            time.sleep(0.3)
+            pyautogui.click(click2_x, click2_y_top)
+            print(f"Click 2 LEFT TOP ({click2_x}, {click2_y_top})")
+            
+            time.sleep(0.3)
+            pyautogui.click(click2_x, click2_y_middle)
+            print(f"Click 2 LEFT MIDDLE ({click2_x}, {click2_y_middle})")
+            
+            time.sleep(0.3)
+            pyautogui.click(click2_x, click2_y_bottom)
+            print(f"Click 2 LEFT BOTTOM ({click2_x}, {click2_y_bottom})")
             
             time.sleep(1)
             
+            # Ctrl + прицел + клик
             pyautogui.keyDown('ctrl')
             pyautogui.moveTo(450, 330, duration=0.2)
             time.sleep(1)
@@ -50,12 +80,13 @@ def run_macro():
             
             time.sleep(2)
             
+            # Второй прицел + клик
             pyautogui.moveTo(430, 300, duration=0.2)
             time.sleep(1)
             pyautogui.click(430, 300)
             print("Aim+1s+Click (430, 300)")
             
-            time.sleep(13)
+            time.sleep(10)
             
         except pyautogui.FailSafeException:
             print("Emergency stop (mouse in screen corner)")
@@ -74,16 +105,16 @@ def on_press(key):
 
 def main():
     print("=== MACRO F7 ===")
-    print("F7 - turn macro on/off")
-    print("Move mouse to screen corner for emergency stop")
-    print("Ctrl+C to exit the program")
+    print("F7 - включить/выключить макрос")
+    print("Наведите мышь в угол экрана для экстренной остановки")
+    print("Ctrl+C для выхода из программы")
     print()
     
     with keyboard.Listener(on_press=on_press) as listener:
         try:
             listener.join()
         except KeyboardInterrupt:
-            print("\nProgram terminated")
+            print("\nПрограмма завершена")
             macro_active = False
 
 if __name__ == "__main__":
